@@ -12,7 +12,7 @@ const swaggerOptions = {
     },
     servers: [
       {
-        url: `http://${process.env.HOST || "localhost"}:${process.env.PORT || 3000}`,
+        url: `/`,
         description: "Dynamic server",
       },
     ],
@@ -27,9 +27,11 @@ const swaggerOptions = {
     },
   },
   apis: [
-    path.join(__dirname, "../api/*/*.js")
+    path.join(__dirname, "../api/**/*.js")
   ], // Path to route files
 };
+
+console.log("Generating Swagger docs with options:", swaggerOptions);
 
 // amazonq-ignore-next-line
 const swaggerDocs = swaggerJSDoc(swaggerOptions);
