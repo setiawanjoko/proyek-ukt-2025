@@ -37,7 +37,6 @@ console.log("Generating Swagger docs with options:", swaggerOptions);
 const swaggerDocs = swaggerJSDoc(swaggerOptions);
 console.log("Swagger paths:", swaggerDocs.paths);
 
-
 const swaggerUIOptions = {
   customCss: '.swagger-ui .topbar { display: none }',
   customSiteTitle: "Project UKT 2025 API Documentation",
