@@ -27,6 +27,10 @@ async function getAllProducts(req, res) {
 async function getProductById(req, res) {
   try {
     const { id } = req.params;
+    
+    if (!id || isNaN(parseInt(id))) {
+      return res.status(400).json({ success: false, message: "Invalid product ID" });
+    }
 
     const result = await productService.getProductByIdService(id, req); // Pass the request object for server URL mapping
 
@@ -68,6 +72,11 @@ async function addProduct(req, res) {
 async function updateProduct(req, res) {
   try {
     const { id } = req.params;
+    
+    if (!id || isNaN(parseInt(id))) {
+      return res.status(400).json({ success: false, message: "Invalid product ID" });
+    }
+    
     const productData = req.body;
 
     const imageSrc = uploadProductImage(req);

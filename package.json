@@ -1,5 +1,5 @@
 {
-  "name": "project-ukt-2025",
+  "name": "@local/project-ukt-2025",
   "version": "1.0.0",
   "main": "server.js",
   "scripts": {

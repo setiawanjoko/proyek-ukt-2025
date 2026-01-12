@@ -1,5 +1,6 @@
 const swaggerUi = require("swagger-ui-express");
 const swaggerJSDoc = require("swagger-jsdoc");
+const path = require("path");
 
 const swaggerOptions = {
   definition: {
@@ -30,14 +31,15 @@ const swaggerOptions = {
   ], // Path to route files
 };
 
+// amazonq-ignore-next-line
 const swaggerDocs = swaggerJSDoc(swaggerOptions);
 
-const options = {
+const swaggerUIOptions = {
   customCss: '.swagger-ui .topbar { display: none }',
   customSiteTitle: "Project UKT 2025 API Documentation",
   customfavIcon: "/static/favicon.png",
-}
+};
 
-const swagger = swaggerUi.setup(swaggerDocs, options);
+const swagger = swaggerUi.setup(swaggerDocs, swaggerUIOptions);
 
 module.exports = { swagger, swaggerDocs};

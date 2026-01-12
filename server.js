@@ -5,6 +5,7 @@ const productRoutes = require('./src/api/products');
 const {swagger} = require('./src/docs/swagger.js');
 const swaggerUi = require('swagger-ui-express');
 const cors = require('cors');
+const logger = require('./src/utils/logger');
 
 const app = express();
 const port = process.env.PORT || 3000; // Use environment variable for port
@@ -13,7 +14,7 @@ const host = process.env.HOST || 'localhost'; // Use environment variable for ho
 // Middleware to parse JSON requests
 app.use(express.json());
 
-app.use(cors());
+app.use(cors({ origin: process.env.CORS_ORIGIN || '*' }));
 
 // Middleware to serve static files from the 'public' directory
 app.use('/static', express.static(path.join(__dirname, 'public')));
@@ -29,7 +30,7 @@ app.use('/', swaggerUi.serve, swagger);
 
 // Generic error-handling middleware
 app.use((err, req, res, next) => {
-  console.error(err.stack);
+  logger.error(`Server error: ${err.message}`, { stack: err.stack });
   res.status(500).json({ success: false, message: 'Internal Server Error' });
 });
 

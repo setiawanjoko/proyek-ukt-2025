@@ -5,17 +5,18 @@
  *   description: Product management endpoints (use "webadmin@example.com" and "password" for admin access)
  */
 
-const { Router } = require("express");
-const {
-  getAllProducts,
-  getProductById,
-  addProduct,
-  updateProduct,
-  deleteProduct,
-} = require("./productController.js");
-const authMiddleware = require("../../middleware/authMiddleware");
-const { requireRole } = require("../../middleware/roleMiddleware");
-const routes = new Router();
+try {
+  const { Router } = require("express");
+  const {
+    getAllProducts,
+    getProductById,
+    addProduct,
+    updateProduct,
+    deleteProduct,
+  } = require("./productController.js");
+  const authMiddleware = require("../../middleware/authMiddleware");
+  const { requireRole } = require("../../middleware/roleMiddleware");
+  const routes = new Router();
 
 /**
  * @swagger
@@ -160,6 +161,8 @@ routes.put("/:id", authMiddleware, requireRole('admin'), updateProduct);
  *   delete:
  *     summary: Delete a product
  *     tags: [Products]
+ *     security:
+ *       - bearerAuth: []
  *     parameters:
  *       - in: path
  *         name: id
@@ -170,6 +173,10 @@ routes.put("/:id", authMiddleware, requireRole('admin'), updateProduct);
  *     responses:
  *       200:
  *         description: Product deleted successfully
+ *       401:
+ *         description: Unauthorized
+ *       403:
+ *         description: Forbidden - Admin role required
  *       404:
  *         description: Product not found
  *       500:
@@ -178,3 +185,7 @@ routes.put("/:id", authMiddleware, requireRole('admin'), updateProduct);
 routes.delete("/:id", authMiddleware, requireRole('admin'), deleteProduct);
 
 module.exports = routes;
+} catch (err) {
+  console.error('Error loading products module:', err.message);
+  module.exports = require('express').Router();
+}

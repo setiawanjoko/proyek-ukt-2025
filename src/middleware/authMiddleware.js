@@ -10,6 +10,9 @@ function authMiddleware(req, res, next) {
   const token = authHeader.split(' ')[1];
 
   try {
+    if (!process.env.JWT_SECRET) {
+      return res.status(500).json({ success: false, message: 'Server configuration error' });
+    }
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
     req.user = decoded; // Attach decoded user info (including role) to the request object
     next();

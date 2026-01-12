@@ -20,26 +20,26 @@ function calculateExpiry(days) {
 }
 
 async function loginService(email, password) {
-  const result = await pool.query(
-    "SELECT * FROM users WHERE email = $1 LIMIT 1",
-    [email]
-  );
-  const user = result.rows[0];
-  if (user && bcrypt.compareSync(password, user.password)) {
-    const accessToken = generateToken(
-      { id: user.id, email: user.email },
-      process.env.JWT_SECRET,
-      "1h"
+    const result = await pool.query(
+      "SELECT * FROM users WHERE email = $1 LIMIT 1",
+      [email]
     );
-    const refreshToken = generateToken(
-      { id: user.id, email: user.email },
-      process.env.JWT_REFRESH_SECRET,
-      "7d"
-    );
-    await saveRefreshTokenService(user.id, refreshToken);
-    return { success: true, message: "Login successful", token: { accessToken, refreshToken } };
-  }
-  return { success: false, message: "Invalid credentials" };
+    const user = result.rows[0];
+    if (user && bcrypt.compareSync(password, user.password)) {
+      const accessToken = generateToken(
+        { id: user.id, email: user.email },
+        process.env.JWT_SECRET,
+        "1h"
+      );
+      const refreshToken = generateToken(
+        { id: user.id, email: user.email },
+        process.env.JWT_REFRESH_SECRET,
+        "7d"
+      );
+      await saveRefreshTokenService(user.id, refreshToken);
+      return { success: true, message: "Login successful", token: { accessToken, refreshToken } };
+    }
+    return { success: false, message: "Invalid credentials" };
 }
 
 async function registerService(fullname, email, password) {
