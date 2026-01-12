@@ -37,4 +37,6 @@ const options = {
   customfavIcon: "/static/favicon.png",
 }
 
-module.exports = swaggerUi.setup(swaggerDocs, options);
+const swagger = swaggerUi.setup(swaggerDocs, options);
+
+module.exports = { swagger, swaggerDocs};
