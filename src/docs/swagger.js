@@ -35,6 +35,8 @@ console.log("Generating Swagger docs with options:", swaggerOptions);
 
 // amazonq-ignore-next-line
 const swaggerDocs = swaggerJSDoc(swaggerOptions);
+console.log("Swagger paths:", swaggerDocs.paths);
+
 
 const swaggerUIOptions = {
   customCss: '.swagger-ui .topbar { display: none }',

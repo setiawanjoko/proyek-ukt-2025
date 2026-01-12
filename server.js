@@ -28,6 +28,7 @@ app.use('/api/products', productRoutes);
 // Swagger API documentation route
 app.use('/', swaggerUi.serve, swagger);
 
+
 // Generic error-handling middleware
 app.use((err, req, res, next) => {
   logger.error(`Server error: ${err.message}`, { stack: err.stack });
