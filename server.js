@@ -2,7 +2,7 @@ const express = require('express');
 const path = require('path');
 const authRoutes = require('./src/api/auth');
 const productRoutes = require('./src/api/products');
-const swaggerSpec = require('./src/docs/swagger.js');
+const swagger = require('./src/docs/swagger.js');
 const swaggerUi = require('swagger-ui-express');
 const cors = require('cors');
 
@@ -25,10 +25,7 @@ app.use('/api/auth', authRoutes);
 app.use('/api/products', productRoutes);
 
 // Swagger API documentation route
-app.use('/', swaggerUi.serve, swaggerUi.setup(swaggerSpec, {
-  customSiteTitle: "Project UKT 2025 API Documentation",
-  customfavIcon: "/static/favicon.png",
-}));
+app.use('/', swaggerUi.serve, swagger);
 
 // Generic error-handling middleware
 app.use((err, req, res, next) => {

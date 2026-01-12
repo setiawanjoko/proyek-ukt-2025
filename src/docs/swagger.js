@@ -1,3 +1,4 @@
+const swaggerUi = require("swagger-ui-express");
 const swaggerJSDoc = require("swagger-jsdoc");
 
 const swaggerOptions = {
@@ -31,7 +32,9 @@ const swaggerOptions = {
 const swaggerDocs = swaggerJSDoc(swaggerOptions);
 
 const options = {
-  customCss: '.swagger-ui .topbar { display: none }'
+  customCss: '.swagger-ui .topbar { display: none }',
+  customSiteTitle: "Project UKT 2025 API Documentation",
+  customfavIcon: "/static/favicon.png",
 }
 
 module.exports = swaggerUi.setup(swaggerDocs, options);
