@@ -26,7 +26,6 @@ app.use('/api/products', productRoutes);
 
 // Swagger API documentation route
 app.use('/', swaggerUi.serve, swagger);
-app.use('/api-docs', swaggerUi.serve, swagger);
 
 // Generic error-handling middleware
 app.use((err, req, res, next) => {
