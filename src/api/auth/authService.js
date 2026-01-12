@@ -1,10 +1,8 @@
-const dotenv = require("dotenv");
 const { pool } = require("../../config/db");
 const bcrypt = require("bcryptjs");
 const crypto = require("crypto");
 const jsonwebtoken = require("jsonwebtoken");
 const logger = require("../../utils/logger");
-dotenv.config();
 
 // Utility function to hash tokens
 function hashToken(token) {
