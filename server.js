@@ -2,7 +2,7 @@ const express = require('express');
 const path = require('path');
 const authRoutes = require('./src/api/auth');
 const productRoutes = require('./src/api/products');
-const {swagger, swaggerDocs} = require('./src/docs/swagger.js');
+const {swagger} = require('./src/docs/swagger.js');
 const swaggerUi = require('swagger-ui-express');
 const cors = require('cors');
 
@@ -25,7 +25,8 @@ app.use('/api/auth', authRoutes);
 app.use('/api/products', productRoutes);
 
 // Swagger API documentation route
-app.use('/', swaggerUi.serveFiles(swaggerDocs), swagger);
+app.use('/', swaggerUi.serve, swagger);
+app.use('/api-docs', swaggerUi.serve, swagger);
 
 // Generic error-handling middleware
 app.use((err, req, res, next) => {

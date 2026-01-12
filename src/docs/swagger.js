@@ -28,7 +28,6 @@ const swaggerOptions = {
   apis: ["./src/api/auth/*.js", "./src/api/products/*.js"], // Path to route files
 };
 
-
 const swaggerDocs = swaggerJSDoc(swaggerOptions);
 
 const options = {
