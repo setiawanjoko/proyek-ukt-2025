@@ -1,6 +1,6 @@
 const swaggerJSDoc = require("swagger-jsdoc");
 
-const options = {
+const swaggerOptions = {
   definition: {
     openapi: "3.0.3",
     info: {
@@ -27,4 +27,11 @@ const options = {
   apis: ["./src/api/auth/*.js", "./src/api/products/*.js"], // Path to route files
 };
 
-module.exports = swaggerJSDoc(options);
+
+const swaggerDocs = swaggerJSDoc(swaggerOptions);
+
+const options = {
+  customCss: '.swagger-ui .topbar { display: none }'
+}
+
+module.exports = swaggerUi.setup(swaggerDocs, options);
