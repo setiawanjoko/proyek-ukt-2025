@@ -5,6 +5,9 @@ const productRoutes = require('./src/api/products');
 const swaggerSpec = require('./src/docs/swagger.js');
 const swaggerUi = require('swagger-ui-express');
 const cors = require('cors');
+const dotenv = require('dotenv');
+
+dotenv.config();
 
 const app = express();
 const port = process.env.PORT || 3000; // Use environment variable for port
