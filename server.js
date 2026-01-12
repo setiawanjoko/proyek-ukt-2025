@@ -16,7 +16,7 @@ app.use(express.json());
 app.use(cors());
 
 // Middleware to serve static files from the 'public' directory
-app.use('/static', express.static(path.join(__dirname, 'public')));
+app.use('/', express.static(path.join(__dirname, 'public')));
 
 // Mount authentication routes under '/api/auth'
 app.use('/api/auth', authRoutes);
