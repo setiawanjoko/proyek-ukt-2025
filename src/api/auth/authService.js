@@ -5,7 +5,7 @@ const jsonwebtoken = require("jsonwebtoken");
 const logger = require("../../utils/logger");
 const dotenv = require("dotenv");
 
-dotenv.config();
+dotenv.config({ quiet: true });
 
 // Utility function to hash tokens
 function hashToken(token) {
