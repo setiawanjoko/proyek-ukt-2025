@@ -7,7 +7,7 @@ const YAML = require("yamljs");
 const cors = require("cors");
 const logger = require("./src/utils/logger");
 // Load Swagger YAML documentation
-const swaggerDocument = YAML.load("./swagger.yaml");
+const swaggerDocument = YAML.load(__dirname + "/swagger.yaml");
 const dotenv = require("dotenv");
 
 dotenv.config();
