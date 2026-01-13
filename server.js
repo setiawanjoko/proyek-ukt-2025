@@ -2,8 +2,8 @@ const express = require('express');
 const path = require('path');
 const authRoutes = require('./src/api/auth');
 const productRoutes = require('./src/api/products');
-const {swagger} = require('./src/docs/swagger.js');
 const swaggerUi = require('swagger-ui-express');
+const YAML = require('yamljs');
 const cors = require('cors');
 const logger = require('./src/utils/logger');
 
@@ -25,8 +25,16 @@ app.use('/api/auth', authRoutes);
 // Mount product routes under '/api/products'
 app.use('/api/products', productRoutes);
 
+// Load Swagger YAML documentation
+const swaggerDocument = YAML.load('./swagger.yaml');
+const swaggerOptions = {
+  customCss: '.swagger-ui .topbar { display: none }',
+  customSiteTitle: "Project UKT 2025 API Documentation",
+  customfavIcon: "/static/favicon.ico",
+};
+
 // Swagger API documentation route
-app.use('/docs', swaggerUi.serve, swagger);
+app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument, swaggerOptions));
 
 
 // Generic error-handling middleware
