@@ -35,6 +35,8 @@ const swaggerOptions = {
   customSiteTitle: "Project UKT 2025 API Documentation",
   customfavIcon: __dirname + "/public/favicon.ico",
 };
+console.log("SwaggerDocument:", swaggerDocument);
+console.log("SwaggerOptions:", swaggerOptions);
 
 // Swagger API documentation route
 app.use(
