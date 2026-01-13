@@ -33,7 +33,7 @@ app.use("/api/products", productRoutes);
 const swaggerOptions = {
   customCss: ".swagger-ui .topbar { display: none }",
   customSiteTitle: "Project UKT 2025 API Documentation",
-  customfavIcon: "/static/favicon.ico",
+  customfavIcon: __dirname + "/public/favicon.ico",
 };
 
 // Swagger API documentation route
