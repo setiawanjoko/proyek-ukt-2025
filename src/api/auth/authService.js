@@ -30,7 +30,7 @@ async function loginService(email, password) {
     const user = result.rows[0];
     if (user && bcrypt.compareSync(password, user.password)) {
       const accessToken = generateToken(
-        { id: user.id, email: user.email },
+        { id: user.id, email: user.email, role: user.role },
         process.env.JWT_SECRET,
         "1h"
       );

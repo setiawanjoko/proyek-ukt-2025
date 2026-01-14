@@ -1,0 +1,15 @@
+2026-01-14 10:47:25 [ERROR]: Server error: Expected ',' or '}' after property value in JSON at position 22 (line 2 column 21)
+2026-01-14 10:47:56 [ERROR]: Refresh token error: jwt malformed
+2026-01-14 10:50:54 [ERROR]: Error updating product: Cannot convert undefined or null to object
+2026-01-14 10:52:09 [INFO]: Product data received for update:
+2026-01-14 10:52:09 [ERROR]: Error updating product: Cannot convert undefined or null to object
+2026-01-14 10:54:07 [INFO]: Product data received for update:
+2026-01-14 10:54:07 [INFO]: File received for update:
+2026-01-14 10:54:07 [ERROR]: Error updating product: Cannot convert undefined or null to object
+2026-01-14 10:55:46 [ERROR]: Error updating product: Cannot convert undefined or null to object
+2026-01-14 10:55:55 [ERROR]: Error updating product: Cannot convert undefined or null to object
+2026-01-14 10:56:32 [ERROR]: Error updating product: Cannot convert undefined or null to object
+2026-01-14 10:56:58 [ERROR]: Error updating product: Cannot convert undefined or null to object
+2026-01-14 10:57:41 [ERROR]: Error updating product: Cannot convert undefined or null to object
+2026-01-14 10:58:01 [ERROR]: Error updating product: Cannot convert undefined or null to object
+2026-01-14 11:09:53 [ERROR]: Refresh token error: invalid signature

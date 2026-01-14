@@ -2,6 +2,7 @@ const express = require("express");
 const path = require("path");
 const authRoutes = require("./src/api/auth");
 const productRoutes = require("./src/api/products");
+const categoriesRoutes = require("./src/api/categories");
 const swaggerUi = require("swagger-ui-express");
 const YAML = require("yamljs");
 const cors = require("cors");
@@ -30,13 +31,15 @@ app.use("/api/auth", authRoutes);
 // Mount product routes under '/api/products'
 app.use("/api/products", productRoutes);
 
+// Mount category routes under '/api/categories'
+app.use("/api/categories", categoriesRoutes);
+
 const swaggerOptions = {
   customCss: ".swagger-ui .topbar { display: none }",
   customSiteTitle: "Project UKT 2025 API Documentation",
-  customfavIcon: __dirname + "/public/favicon.ico",
+  customfavIcon: "/static/favicon.ico",
 };
-console.log("SwaggerDocument:", swaggerDocument);
-console.log("SwaggerOptions:", swaggerOptions);
+console.log("SwaggerDocument:", swaggerDocument.paths);
 
 // Swagger API documentation route
 app.use(

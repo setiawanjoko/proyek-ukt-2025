@@ -11,9 +11,9 @@ try {
   const { requireRole } = require("../../middleware/roleMiddleware");
   const routes = new Router();
 
-routes.get("/", getAllProducts);
+routes.get("/", authMiddleware, getAllProducts);
 
-routes.get("/:id", getProductById);
+routes.get("/:id", authMiddleware, getProductById);
 
 routes.post("/", authMiddleware, requireRole('admin'), addProduct);
 

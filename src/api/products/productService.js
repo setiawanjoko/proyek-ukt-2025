@@ -48,7 +48,6 @@ async function getAllProductsService(
 ) {
   try {
     const pool = await getPool();
-    const logger = await getLogger();
     
     let query = "SELECT * FROM products WHERE deleted_at IS NULL";
     if (includeSoftDeleted) {
@@ -75,7 +74,7 @@ async function getAllProductsService(
       return product;
     });
 
-    return { success: true, products };
+    return { success: true, message: "Products retrieved successfully", data: products };
   } catch (err) {
     const logger = await getLogger();
     logger.error(`Get all products error: ${err.message}`);
@@ -99,7 +98,7 @@ async function getProductByIdService(productId, req) {
         product.image_url = `${server_url}${product.image_url}`;
     }
 
-    return { success: true, product };
+    return { success: true, message: "Product retrieved successfully", data: product };
   } catch (err) {
     const logger = await getLogger();
     logger.error(`Get product by ID error: ${err.message}`);
@@ -110,12 +109,23 @@ async function getProductByIdService(productId, req) {
 async function addProductService(productData) {
   try {
     const pool = await getPool();
-    const { name, price, stock, image } = productData;
+    const { categoryId, name, price, stock, image } = productData;
+    // check category exists
+    if (categoryId) {
+      const categoryResult = await pool.query(
+        "SELECT * FROM categories WHERE id = $1",
+        [categoryId]
+      );
+      if (categoryResult.rows.length === 0) {
+        return { success: false, message: "Category not found" };
+      }
+    }
+
     const result = await pool.query(
-      "INSERT INTO products (name, price, stock, image_url) VALUES ($1, $2, $3, $4) RETURNING *",
-      [name, price, stock, image]
+      "INSERT INTO products (category_id, name, price, stock, image_url) VALUES ($1, $2, $3, $4, $5) RETURNING *",
+      [categoryId, name, price, stock, image]
     );
-    return { success: true, product: result.rows[0] };
+    return { success: true, message: "Product added successfully", data: result.rows[0] };
   } catch (err) {
     const logger = await getLogger();
     logger.error(`Add product error: ${err.message}`);
@@ -138,7 +148,18 @@ async function updateProductService(productId, productData) {
     }
 
     values.push(productId);
-    const query = `UPDATE products SET ${fields.join(
+    // Check category exists if category_id is being updated
+    if (productData.categoryId) {
+      const categoryResult = await pool.query(
+        "SELECT * FROM categories WHERE id = $1",
+        [productData.categoryId]
+      );
+      if (categoryResult.rows.length === 0) {
+        return { success: false, message: "Category not found" };
+      }
+    }
+
+    const query = `UPDATE products SET updated_at = NOW(), ${fields.join(
       ", "
     )} WHERE id = $${index} AND deleted_at IS NULL RETURNING *`;
     const result = await pool.query(query, values);
@@ -158,7 +179,7 @@ async function deleteProductService(productId) {
   try {
     const pool = await getPool();
     const result = await pool.query(
-      "UPDATE products SET deleted_at = NOW() WHERE id = $1 AND deleted_at IS NULL RETURNING *",
+      "UPDATE products SET deleted_at = NOW(), updated_at = NOW() WHERE id = $1 AND deleted_at IS NULL RETURNING *",
       [productId]
     );
     if (result.rows.length === 0) {

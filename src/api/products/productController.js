@@ -27,9 +27,11 @@ async function getAllProducts(req, res) {
 async function getProductById(req, res) {
   try {
     const { id } = req.params;
-    
+
     if (!id || isNaN(parseInt(id))) {
-      return res.status(400).json({ success: false, message: "Invalid product ID" });
+      return res
+        .status(400)
+        .json({ success: false, message: "Invalid product ID" });
     }
 
     const result = await productService.getProductByIdService(id, req); // Pass the request object for server URL mapping
@@ -48,7 +50,7 @@ async function getProductById(req, res) {
 async function addProduct(req, res) {
   try {
     const validationError = validateFields(
-      ["name", "price", "stock"],
+      ["categoryID", "name", "price", "stock"],
       req.body
     );
     if (validationError) {
@@ -72,12 +74,21 @@ async function addProduct(req, res) {
 async function updateProduct(req, res) {
   try {
     const { id } = req.params;
-    
+
     if (!id || isNaN(parseInt(id))) {
-      return res.status(400).json({ success: false, message: "Invalid product ID" });
+      return res
+        .status(400)
+        .json({ success: false, message: "Invalid product ID" });
     }
-    
+
     const productData = req.body;
+
+    // Check productData or file presence
+    if (!productData && !req.file) {
+      return res
+        .status(400)
+        .json({ success: false, message: "No data provided for update" });
+    }
 
     const imageSrc = uploadProductImage(req);
     if (imageSrc) {
